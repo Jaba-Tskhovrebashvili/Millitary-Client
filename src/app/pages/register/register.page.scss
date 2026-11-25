@@ -1,0 +1,76 @@
+@use 'mixins' as m;
+
+.auth {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.card {
+  @include m.card;
+  width: 100%;
+  max-width: 460px;
+  padding: 32px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.lead {
+  margin: 6px 0 24px;
+  color: var(--c-muted);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  @include m.field;
+}
+
+.alert {
+  @include m.alert(danger);
+}
+
+.btn {
+  @include m.button(primary);
+  width: 100%;
+  padding: 11px;
+}
+
+.sent {
+  @include m.alert(success);
+  margin-top: 16px;
+  color: var(--c-text);
+
+  p {
+    margin: 0 0 6px;
+
+    &:last-child {
+      margin: 0;
+    }
+  }
+}
+
+.switch {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 14px;
+  color: var(--c-muted);
+}

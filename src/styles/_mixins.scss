@@ -1,0 +1,150 @@
+@mixin page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+  }
+
+  .subtitle {
+    margin: 4px 0 0;
+    color: var(--c-muted);
+    font-size: 14px;
+  }
+}
+
+@mixin button($variant: primary) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  @if $variant == primary {
+    background: var(--c-primary);
+    color: #fff;
+
+    &:hover:not(:disabled) {
+      background: var(--c-primary-hover);
+    }
+  } @else if $variant == secondary {
+    background: var(--c-surface);
+    border-color: var(--c-border);
+    color: var(--c-text);
+
+    &:hover:not(:disabled) {
+      border-color: var(--c-muted);
+    }
+  } @else if $variant == danger {
+    background: var(--c-surface);
+    border-color: var(--c-danger);
+    color: var(--c-danger);
+
+    &:hover:not(:disabled) {
+      background: var(--c-danger-soft);
+    }
+  }
+}
+
+@mixin field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  label {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    padding: 9px 12px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    outline: none;
+
+    &:focus {
+      border-color: var(--c-primary);
+      box-shadow: 0 0 0 3px var(--c-primary-soft);
+    }
+
+    &.ng-invalid.ng-touched {
+      border-color: var(--c-danger);
+    }
+  }
+
+  .hint {
+    font-size: 13px;
+    color: var(--c-danger);
+  }
+}
+
+@mixin search-input {
+  width: 300px;
+  max-width: 100%;
+  padding: 9px 12px;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  outline: none;
+
+  &:focus {
+    border-color: var(--c-primary);
+    box-shadow: 0 0 0 3px var(--c-primary-soft);
+  }
+}
+
+@mixin alert($tone: danger) {
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  background: var(--c-#{$tone}-soft);
+  color: var(--c-#{$tone});
+  font-size: 14px;
+}
+
+@mixin badge($tone: success) {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: var(--c-#{$tone}-soft);
+  color: var(--c-#{$tone});
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+@mixin card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+}
+
+@mixin list-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  color: var(--c-muted);
+  font-size: 14px;
+}

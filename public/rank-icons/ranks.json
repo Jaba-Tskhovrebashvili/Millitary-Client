@@ -1,0 +1,116 @@
+[
+  {
+    "file": "01-of-9-general-of-the-army.svg",
+    "georgian": "არმიის გენერალი",
+    "english": "General of the Army",
+    "nato": "OF-9"
+  },
+  {
+    "file": "02-of-8-lieutenant-general.svg",
+    "georgian": "გენერალ-ლეიტენანტი",
+    "english": "Lieutenant General",
+    "nato": "OF-8"
+  },
+  {
+    "file": "03-of-7-major-general.svg",
+    "georgian": "გენერალ-მაიორი",
+    "english": "Major General",
+    "nato": "OF-7"
+  },
+  {
+    "file": "04-of-6-brigadier-general.svg",
+    "georgian": "ბრიგადის გენერალი",
+    "english": "Brigadier General",
+    "nato": "OF-6"
+  },
+  {
+    "file": "05-of-5-colonel.svg",
+    "georgian": "პოლკოვნიკი",
+    "english": "Colonel",
+    "nato": "OF-5"
+  },
+  {
+    "file": "06-of-4-lieutenant-colonel.svg",
+    "georgian": "ვიცე-პოლკოვნიკი",
+    "english": "Lieutenant Colonel",
+    "nato": "OF-4"
+  },
+  {
+    "file": "07-of-3-major.svg",
+    "georgian": "მაიორი",
+    "english": "Major",
+    "nato": "OF-3"
+  },
+  {
+    "file": "08-of-2-captain.svg",
+    "georgian": "კაპიტანი",
+    "english": "Captain",
+    "nato": "OF-2"
+  },
+  {
+    "file": "09-of-1-senior-lieutenant.svg",
+    "georgian": "უფროსი ლეიტენანტი",
+    "english": "Senior Lieutenant",
+    "nato": "OF-1"
+  },
+  {
+    "file": "10-of-1-lieutenant.svg",
+    "georgian": "ლეიტენანტი",
+    "english": "Lieutenant",
+    "nato": "OF-1"
+  },
+  {
+    "file": "11-or-9-chief-sergeant.svg",
+    "georgian": "მთავარი სერჟანტი",
+    "english": "Chief Sergeant",
+    "nato": "OR-9"
+  },
+  {
+    "file": "12-or-8-master-sergeant.svg",
+    "georgian": "მასტერ-სერჟანტი",
+    "english": "Master Sergeant",
+    "nato": "OR-8"
+  },
+  {
+    "file": "13-or-7-senior-sergeant.svg",
+    "georgian": "უფროსი სერჟანტი",
+    "english": "Senior Sergeant",
+    "nato": "OR-7"
+  },
+  {
+    "file": "14-or-6-sergeant.svg",
+    "georgian": "სერჟანტი",
+    "english": "Sergeant",
+    "nato": "OR-6"
+  },
+  {
+    "file": "15-or-5-junior-sergeant.svg",
+    "georgian": "უმცროსი სერჟანტი",
+    "english": "Junior Sergeant",
+    "nato": "OR-5"
+  },
+  {
+    "file": "16-or-4-specialist-corporal.svg",
+    "georgian": "კაპრალ-სპეციალისტი",
+    "english": "Specialist Corporal",
+    "nato": "OR-4"
+  },
+  {
+    "file": "17-or-4-corporal.svg",
+    "georgian": "კაპრალი",
+    "english": "Corporal",
+    "nato": "OR-4"
+  },
+  {
+    "file": "18-or-3-private-first-class.svg",
+    "georgian": "I კლასის რიგითი",
+    "english": "Private First Class",
+    "nato": "OR-3"
+  },
+  {
+    "file": "19-or-2-private.svg",
+    "georgian": "რიგითი",
+    "english": "Private",
+    "nato": "OR-2"
+  }
+]

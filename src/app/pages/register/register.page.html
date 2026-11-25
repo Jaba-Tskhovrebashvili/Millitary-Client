@@ -1,0 +1,51 @@
+<section class="auth">
+  <div class="card">
+    <h1>რეგისტრაცია</h1>
+
+    @if (page.sentMessage(); as message) {
+      <div class="sent">
+        <p><strong>{{ message }}</strong></p>
+        <p>გახსენით წერილი და გადადით ბმულზე, რომ პაროლი დააყენოთ. ბმული 5 წუთი მოქმედებს.</p>
+      </div>
+    } @else {
+      <p class="lead">შეიყვანეთ მონაცემები. ელ-ფოსტაზე მიიღებთ ბმულს პაროლის დასაყენებლად.</p>
+
+      <form [formGroup]="form" (ngSubmit)="submit()" novalidate>
+        <div class="row">
+          <div class="field">
+            <label for="name">სახელი</label>
+            <input id="name" formControlName="name" autocomplete="given-name">
+            @if (form.controls.name.touched && form.controls.name.invalid) {
+              <span class="hint">მინიმუმ 3 ასო</span>
+            }
+          </div>
+          <div class="field">
+            <label for="surname">გვარი</label>
+            <input id="surname" formControlName="surname" autocomplete="family-name">
+            @if (form.controls.surname.touched && form.controls.surname.invalid) {
+              <span class="hint">მინიმუმ 3 ასო</span>
+            }
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="email">ელ-ფოსტა</label>
+          <input id="email" type="email" formControlName="email" autocomplete="email">
+          @if (form.controls.email.touched && form.controls.email.invalid) {
+            <span class="hint">შეიყვანეთ სწორი ელ-ფოსტა</span>
+          }
+        </div>
+
+        @if (page.error(); as error) {
+          <div class="alert">{{ error }}</div>
+        }
+
+        <button type="submit" class="btn" [disabled]="page.submitting()">
+          {{ page.submitting() ? 'იგზავნება...' : 'ბმულის გაგზავნა' }}
+        </button>
+      </form>
+    }
+
+    <p class="switch">უკვე გაქვთ ანგარიში? <a routerLink="/sign-in">შესვლა</a></p>
+  </div>
+</section>

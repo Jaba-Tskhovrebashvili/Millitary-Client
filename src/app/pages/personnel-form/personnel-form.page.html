@@ -1,0 +1,79 @@
+<a [routerLink]="isEdit() ? ['/personnel', personnelId()] : ['/personnel']" class="back">← უკან</a>
+
+<header class="page-header">
+  <h1>{{ isEdit() ? 'მონაცემების რედაქტირება' : 'ახალი თანამშრომელი' }}</h1>
+</header>
+
+@if (page.loading()) {
+  <p class="muted">იტვირთება...</p>
+} @else {
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()" novalidate>
+    <h2>პირადი მონაცემები</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="name">სახელი</label>
+        <input id="name" formControlName="name">
+        @if (invalid('name')) { <span class="hint">2-დან 50 ასომდე</span> }
+      </div>
+      <div class="field">
+        <label for="surname">გვარი</label>
+        <input id="surname" formControlName="surname">
+        @if (invalid('surname')) { <span class="hint">2-დან 50 ასომდე</span> }
+      </div>
+      <div class="field">
+        <label for="pn">პირადი ნომერი</label>
+        <input id="pn" formControlName="personalNumber" inputmode="numeric" maxlength="11">
+        @if (invalid('personalNumber')) { <span class="hint">უნდა იყოს 11 ციფრი</span> }
+      </div>
+      <div class="field">
+        <label for="dob">დაბადების თარიღი</label>
+        <input id="dob" type="date" formControlName="dateOfBirth">
+        @if (invalid('dateOfBirth')) { <span class="hint">მიუთითეთ თარიღი</span> }
+      </div>
+    </div>
+
+    <h2>კონტაქტი</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="email">ელ-ფოსტა</label>
+        <input id="email" type="email" formControlName="email">
+        @if (invalid('email')) { <span class="hint">შეიყვანეთ სწორი ელ-ფოსტა</span> }
+      </div>
+      <div class="field">
+        <label for="phone">ტელეფონი</label>
+        <input id="phone" type="tel" formControlName="phoneNumber">
+        @if (invalid('phoneNumber')) { <span class="hint">შეიყვანეთ ტელეფონის ნომერი</span> }
+      </div>
+    </div>
+
+    <h2>სამსახური</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="rank">წოდება</label>
+        <select id="rank" formControlName="rankId">
+          <option [ngValue]="0" disabled>აირჩიეთ</option>
+          @for (r of page.ranks(); track r.id) {
+            <option [ngValue]="r.id">{{ r.name }}</option>
+          }
+        </select>
+        @if (invalid('rankId')) { <span class="hint">აირჩიეთ წოდება</span> }
+      </div>
+      <div class="field">
+        <label for="enl">გაწვევის თარიღი</label>
+        <input id="enl" type="date" formControlName="enlistmentDate">
+        @if (invalid('enlistmentDate')) { <span class="hint">მიუთითეთ თარიღი</span> }
+      </div>
+    </div>
+
+    @if (page.error(); as error) {
+      <div class="alert">{{ error }}</div>
+    }
+
+    <div class="actions">
+      <a [routerLink]="isEdit() ? ['/personnel', personnelId()] : ['/personnel']" class="btn-secondary">გაუქმება</a>
+      <button type="submit" class="btn" [disabled]="page.saving()">
+        {{ page.saving() ? 'ინახება...' : 'შენახვა' }}
+      </button>
+    </div>
+  </form>
+}

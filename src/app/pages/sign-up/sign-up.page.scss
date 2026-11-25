@@ -1,0 +1,52 @@
+@use 'mixins' as m;
+
+.auth {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+  padding: 24px;
+}
+
+.card {
+  @include m.card;
+  width: 100%;
+  max-width: 420px;
+  padding: 32px;
+}
+
+h1 {
+  margin: 0 0 6px;
+  font-size: 24px;
+}
+
+.lead {
+  margin: 0 0 24px;
+  color: var(--c-muted);
+  font-size: 14px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.field {
+  @include m.field;
+}
+
+.alert {
+  @include m.alert(danger);
+  margin-top: 12px;
+}
+
+.success {
+  @include m.alert(success);
+  margin-top: 12px;
+}
+
+.btn {
+  @include m.button(primary);
+  width: 100%;
+  padding: 11px;
+}

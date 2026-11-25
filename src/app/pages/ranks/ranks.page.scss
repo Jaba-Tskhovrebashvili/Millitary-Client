@@ -1,0 +1,35 @@
+@use 'mixins' as m;
+
+.page-header {
+  @include m.page-header;
+}
+
+.search {
+  @include m.search-input;
+}
+
+.alert {
+  @include m.alert(danger);
+  margin-bottom: 16px;
+}
+
+.list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    @include m.card;
+    padding: 14px 16px;
+    font-weight: 500;
+  }
+}
+
+.note {
+  padding: 40px 0;
+  text-align: center;
+  color: var(--c-muted);
+}

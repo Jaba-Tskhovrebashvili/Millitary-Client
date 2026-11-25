@@ -1,0 +1,26 @@
+<header class="page-header">
+  <h1>ჩემი პროფილი</h1>
+</header>
+
+@if (page.loading()) {
+  <p class="muted">იტვირთება...</p>
+} @else if (page.error()) {
+  <div class="alert">{{ page.error() }}</div>
+} @else if (page.profile(); as p) {
+  <section class="card">
+    <dl>
+      <div>
+        <dt>სახელი</dt>
+        <dd>{{ p.name }}</dd>
+      </div>
+      <div>
+        <dt>გვარი</dt>
+        <dd>{{ p.surname }}</dd>
+      </div>
+      <div>
+        <dt>ელ-ფოსტა</dt>
+        <dd>{{ p.email }}</dd>
+      </div>
+    </dl>
+  </section>
+}

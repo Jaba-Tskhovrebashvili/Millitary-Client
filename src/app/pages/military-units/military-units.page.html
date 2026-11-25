@@ -1,0 +1,54 @@
+<header class="page-header">
+  <div>
+    <h1>სამხედრო ნაწილები</h1>
+    @if (page.count() > 0) {
+      <p class="subtitle">სულ {{ page.count() }}</p>
+    }
+  </div>
+  <input class="search" type="search" placeholder="მოძებნეთ ნაწილი" (input)="onSearch($any($event.target).value)">
+</header>
+
+<div class="table">
+  <div class="row head">
+    <span>დასახელება</span>
+    <span>ტიპი</span>
+    <span>სტატუსი</span>
+  </div>
+
+  @for (unit of page.items(); track unit.id) {
+    <div class="row">
+      <span class="name">{{ unit.description }}</span>
+      <span class="type">{{ unit.unitType?.name ?? '—' }}</span>
+      <span>
+        @if (unit.isActive) {
+          <span class="badge">აქტიური</span>
+        } @else {
+          <span class="badge off">არააქტიური</span>
+        }
+      </span>
+    </div>
+  }
+
+  @if (page.firstLoad()) {
+    <p class="note">იტვირთება...</p>
+  } @else if (!page.loading() && !page.error() && page.items().length === 0) {
+    <p class="note">ნაწილი ვერ მოიძებნა</p>
+  }
+</div>
+
+<footer class="list-footer">
+  @if (page.error(); as error) {
+    <span class="error">{{ error }}</span>
+    <button type="button" class="retry" (click)="page.loadNext()">თავიდან ცდა</button>
+  } @else if (page.loading() && !page.firstLoad()) {
+    იტვირთება...
+  } @else if (!page.hasMore() && page.page() > 1) {
+    ყველა ნაწილი ნაჩვენებია
+  }
+</footer>
+
+<div
+  appInfiniteScroll
+  [scrollDisabled]="page.loading() || !page.hasMore() || !!page.error()"
+  (scrolled)="page.loadNext()"
+></div>

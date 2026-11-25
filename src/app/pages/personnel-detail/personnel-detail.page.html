@@ -1,0 +1,266 @@
+<a routerLink="/personnel" class="back">← პირადი შემადგენლობა</a>
+
+@if (page.loading()) {
+  <p class="muted">იტვირთება...</p>
+} @else if (page.error()) {
+  <div class="alert">{{ page.error() }}</div>
+} @else if (page.profile(); as person) {
+  <header class="person">
+    <div>
+      <h1>{{ person.name }} {{ person.surname }}</h1>
+      <p class="sub">
+        {{ person.rank?.name ?? '' }}
+        @if (currentAssignment(); as assignment) {
+          · {{ assignment.position?.name }}, {{ assignment.militaryUnit?.name }}
+        }
+      </p>
+      @if (!person.isActive) {
+        <span class="badge off">შეჩერებული</span>
+      }
+    </div>
+
+    <div class="actions">
+      <a [routerLink]="['/personnel', person.id, 'edit']" class="btn-secondary">რედაქტირება</a>
+      @if (person.isActive) {
+        @if (confirmDeactivate()) {
+          <span class="confirm">
+            ნამდვილად გსურთ შეჩერება?
+            <button type="button" class="btn-danger" [disabled]="page.saving()" (click)="page.deactivate()">კი</button>
+            <button type="button" class="btn-secondary" (click)="confirmDeactivate.set(false)">არა</button>
+          </span>
+        } @else {
+          <button type="button" class="btn-danger" (click)="confirmDeactivate.set(true)">შეჩერება</button>
+        }
+      }
+    </div>
+  </header>
+
+  <section class="card details">
+    <dl>
+      <div>
+        <dt>პირადი ნომერი</dt>
+        <dd>{{ person.personalNumber }}</dd>
+      </div>
+      <div>
+        <dt>დაბადების თარიღი</dt>
+        <dd>{{ person.dateOfBirth | date: 'dd.MM.yyyy' }}</dd>
+      </div>
+      <div>
+        <dt>გაწვევის თარიღი</dt>
+        <dd>{{ person.enlistmentDate | date: 'dd.MM.yyyy' }}</dd>
+      </div>
+      <div>
+        <dt>სტაჟი</dt>
+        <dd>{{ serviceYears(person.enlistmentDate) }} წელი</dd>
+      </div>
+      <div>
+        <dt>ელ-ფოსტა</dt>
+        <dd>{{ person.email }}</dd>
+      </div>
+      <div>
+        <dt>ტელეფონი</dt>
+        <dd>{{ person.phoneNumber }}</dd>
+      </div>
+    </dl>
+  </section>
+
+  <nav class="tabs">
+    <button type="button" [class.active]="page.tab() === 'assignments'" (click)="page.selectTab('assignments')">
+      დანიშვნები ({{ page.assignments().length }})
+    </button>
+    <button type="button" [class.active]="page.tab() === 'courses'" (click)="page.selectTab('courses')">
+      კურსები ({{ page.courses().length }})
+    </button>
+  </nav>
+
+  @if (page.flash(); as flash) {
+    <div class="flash">{{ flash }}</div>
+  }
+  @if (page.actionError(); as actionError) {
+    <div class="alert">{{ actionError }}</div>
+  }
+
+  @if (page.tab() === 'assignments') {
+    <section class="card panel">
+      <div class="panel-head">
+        <h2>დანიშვნები</h2>
+        @if (!showAssignmentForm()) {
+          <button type="button" class="btn" (click)="openAssignmentForm()">ახალი დანიშვნა</button>
+        }
+      </div>
+
+      @if (showAssignmentForm()) {
+        <form class="inline-form" [formGroup]="assignmentForm" (ngSubmit)="submitAssignment()" novalidate>
+          <div class="field">
+            <label for="unit">ნაწილი</label>
+            <div class="picker">
+              <input
+                id="unit"
+                type="text"
+                autocomplete="off"
+                placeholder="დაიწყეთ წერა ან აირჩიეთ სიიდან"
+                [class.invalid]="showError(assignmentForm.controls.militaryUnitId)"
+                [value]="unitText()"
+                (input)="onUnitTyping($any($event.target).value)"
+                (focus)="openUnitList()"
+                (blur)="closeUnitList()"
+                (keydown.escape)="closeUnitList()"
+              >
+
+              @if (unitListOpen()) {
+                <ul class="picker-list" (mousedown)="$event.preventDefault()" (scroll)="onUnitListScroll($event)">
+                  @for (unit of page.unitOptions(); track unit.id) {
+                    <li [class.selected]="unit.id === selectedUnit()?.id" (click)="chooseUnit(unit)">
+                      {{ unitLabel(unit) }}
+                    </li>
+                  }
+
+                  @if (page.unitsLoading()) {
+                    <li class="picker-note">იტვირთება...</li>
+                  } @else if (page.unitOptions().length === 0) {
+                    <li class="picker-note">ნაწილი ვერ მოიძებნა</li>
+                  }
+                </ul>
+              }
+            </div>
+            @if (showError(assignmentForm.controls.militaryUnitId)) {
+              <span class="hint">აირჩიეთ ნაწილი სიიდან</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="position">თანამდებობა</label>
+            <select id="position" formControlName="positionId">
+              <option [ngValue]="null" disabled>აირჩიეთ თანამდებობა</option>
+              @for (position of page.positionOptions(); track position.id) {
+                <option [ngValue]="position.id">{{ position.name }}</option>
+              }
+            </select>
+            @if (showError(assignmentForm.controls.positionId)) {
+              <span class="hint">აირჩიეთ თანამდებობა</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="start">დაწყების თარიღი</label>
+            <input id="start" type="date" formControlName="startDate">
+            @if (showError(assignmentForm.controls.startDate)) {
+              <span class="hint">მიუთითეთ თარიღი</span>
+            }
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="closeAssignmentForm()">გაუქმება</button>
+            <button type="submit" class="btn" [disabled]="page.saving()">
+              {{ page.saving() ? 'ინახება...' : 'შენახვა' }}
+            </button>
+          </div>
+        </form>
+      }
+
+      @if (page.assignmentsLoading()) {
+        <p class="muted">იტვირთება...</p>
+      } @else {
+        @for (assignment of page.assignments(); track assignment.id) {
+          <div class="item">
+            <div>
+              <strong>{{ assignment.position?.name ?? '—' }}</strong>
+              <span class="muted">{{ assignment.militaryUnit?.description ?? '—' }}</span>
+            </div>
+            <span class="dates">
+              {{ assignment.startDate | date: 'dd.MM.yyyy' }} –
+              {{ assignment.endDate ? (assignment.endDate | date: 'dd.MM.yyyy') : 'დღემდე' }}
+            </span>
+            @if (assignment.isCurrent) {
+              <button
+                type="button"
+                class="btn-secondary small"
+                [disabled]="page.saving()"
+                (click)="page.endAssignment(assignment)"
+              >
+                დასრულება
+              </button>
+            } @else {
+              <span></span>
+            }
+          </div>
+        } @empty {
+          <p class="muted">დანიშვნები ჯერ არ არის.</p>
+        }
+      }
+    </section>
+  }
+
+  @if (page.tab() === 'courses') {
+    <section class="card panel">
+      <div class="panel-head">
+        <h2>კურსები</h2>
+        @if (!showCourseForm()) {
+          <button type="button" class="btn" (click)="openCourseForm()">კურსზე ჩარიცხვა</button>
+        }
+      </div>
+
+      @if (showCourseForm()) {
+        <form class="inline-form" [formGroup]="courseForm" (ngSubmit)="submitCourse()" novalidate>
+          <div class="field">
+            <label for="course">კურსი</label>
+            <select id="course" formControlName="courseId">
+              <option [ngValue]="null" disabled>აირჩიეთ კურსი</option>
+              @for (course of page.courseOptions(); track course.id) {
+                <option [ngValue]="course.id">{{ course.name }}</option>
+              }
+            </select>
+            @if (showError(courseForm.controls.courseId)) {
+              <span class="hint">აირჩიეთ კურსი</span>
+            }
+          </div>
+
+          <div class="field">
+            <label for="enroll">ჩარიცხვის თარიღი</label>
+            <input id="enroll" type="date" formControlName="enrollmentDate">
+            @if (showError(courseForm.controls.enrollmentDate)) {
+              <span class="hint">მიუთითეთ თარიღი</span>
+            }
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn-secondary" (click)="showCourseForm.set(false)">გაუქმება</button>
+            <button type="submit" class="btn" [disabled]="page.saving()">
+              {{ page.saving() ? 'ინახება...' : 'შენახვა' }}
+            </button>
+          </div>
+        </form>
+      }
+
+      @if (page.coursesLoading()) {
+        <p class="muted">იტვირთება...</p>
+      } @else {
+        @for (course of page.courses(); track course.id) {
+          <div class="item">
+            <div>
+              <strong>{{ course.course?.name ?? '—' }}</strong>
+              <span class="muted">
+                ჩაირიცხა {{ course.enrollmentDate | date: 'dd.MM.yyyy' }}
+                @if (course.completionDate) {
+                  · დაასრულა {{ course.completionDate | date: 'dd.MM.yyyy' }}
+                }
+              </span>
+            </div>
+            <span></span>
+            <select
+              aria-label="შედეგი"
+              [disabled]="page.saving()"
+              (change)="changeResult(course, $any($event.target).value)"
+            >
+              @for (result of results; track result) {
+                <option [value]="result" [selected]="result === (course.result ?? 0)">{{ resultLabels[result] }}</option>
+              }
+            </select>
+          </div>
+        } @empty {
+          <p class="muted">კურსები ჯერ არ არის.</p>
+        }
+      }
+    </section>
+  }
+}

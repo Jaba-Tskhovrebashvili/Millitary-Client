@@ -1,0 +1,121 @@
+@use 'mixins' as m;
+
+.page-header {
+  @include m.page-header;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.search {
+  @include m.search-input;
+}
+
+.btn {
+  @include m.button(primary);
+}
+
+.table {
+  @include m.card;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 2fr 1.2fr 1fr 1fr 120px;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--c-border);
+  color: var(--c-text);
+  text-decoration: none;
+
+  .rank-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 10px;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    color: #334155;
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .rank-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:not(.head):hover {
+    background: var(--c-surface-2);
+  }
+
+  &.head {
+    background: var(--c-surface-2);
+    color: var(--c-muted);
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  small {
+    display: block;
+    color: var(--c-muted);
+    font-size: 13px;
+  }
+}
+
+.name {
+  font-weight: 500;
+}
+
+.badge {
+  @include m.badge(success);
+
+  &.off {
+    @include m.badge(danger);
+  }
+}
+
+.note {
+  margin: 0;
+  padding: 40px 0;
+  text-align: center;
+  color: var(--c-muted);
+}
+
+.list-footer {
+  @include m.list-footer;
+}
+
+.error {
+  color: var(--c-danger);
+}
+
+.retry {
+  @include m.button(secondary);
+  padding: 5px 12px;
+}
+
+@media (max-width: 900px) {
+  .row {
+    grid-template-columns: 1fr auto;
+
+    > :nth-child(2),
+    > :nth-child(3),
+    > :nth-child(4) {
+      display: none;
+    }
+  }
+}

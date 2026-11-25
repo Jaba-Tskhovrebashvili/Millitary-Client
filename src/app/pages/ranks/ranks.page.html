@@ -1,0 +1,32 @@
+<header class="page-header">
+  <div>
+    <h1>წოდებები</h1>
+    @if (page.total() > 0) {
+      <p class="subtitle">სულ {{ page.total() }}</p>
+    }
+  </div>
+  <input class="search" type="search" placeholder="მოძებნეთ წოდება" (input)="onSearch($any($event.target).value)">
+</header>
+
+@if (page.error(); as error) {
+  <div class="alert">{{ error }}</div>
+}
+
+<ul class="list">
+  @for (r of page.items(); track r.id) {
+    <li>{{ r.name }}</li>
+  }
+</ul>
+
+@if (page.loading() && page.items().length === 0) {
+  <p class="note">იტვირთება...</p>
+} @else if (!page.loading() && !page.error() && page.total() === 0) {
+  <p class="note">წოდება ვერ მოიძებნა</p>
+}
+
+<div
+  appInfiniteScroll
+  [scrollDisabled]="page.loading() || !page.hasMore()"
+  [scrollKey]="page.items().length"
+  (scrolled)="page.showMore()"
+></div>

@@ -1,0 +1,33 @@
+<div class="shell" [class.menu-open]="menuOpen()">
+  <aside class="sidebar">
+    <a routerLink="/personnel" class="brand" (click)="closeMenu()">
+      <span class="logo">★</span>
+      სამხედრო სამსახური
+    </a>
+
+    <nav>
+      @for (item of nav; track item.path) {
+        <a [routerLink]="item.path" routerLinkActive="active" (click)="closeMenu()">{{ item.label }}</a>
+      }
+    </nav>
+
+    <div class="account">
+      <a routerLink="/profile" routerLinkActive="active" (click)="closeMenu()">ჩემი პროფილი</a>
+      <button type="button" (click)="logout()">გასვლა</button>
+    </div>
+  </aside>
+
+  <div class="backdrop" (click)="closeMenu()"></div>
+
+  <div class="main">
+    <header class="topbar">
+      <button type="button" class="burger" (click)="toggleMenu()" aria-label="მენიუ">☰</button>
+      <span>სამხედრო სამსახური</span>
+    </header>
+    <main class="content">
+      <div class="container">
+        <router-outlet />
+      </div>
+    </main>
+  </div>
+</div>

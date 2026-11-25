@@ -1,0 +1,75 @@
+@use 'mixins' as m;
+
+.page-header {
+  @include m.page-header;
+}
+
+.search {
+  @include m.search-input;
+}
+
+.alert {
+  @include m.alert(danger);
+  margin-bottom: 16px;
+}
+
+.table {
+  @include m.card;
+  overflow: hidden;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 140px 130px;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--c-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.head {
+    padding-block: 12px;
+    background: var(--c-surface-2);
+    color: var(--c-muted);
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+.name {
+  font-weight: 500;
+}
+
+.desc {
+  margin: 2px 0 0;
+  color: var(--c-muted);
+  font-size: 14px;
+}
+
+.badge {
+  @include m.badge(success);
+
+  &.off {
+    @include m.badge(danger);
+  }
+}
+
+.note {
+  margin: 0;
+  padding: 40px 0;
+  text-align: center;
+  color: var(--c-muted);
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr auto;
+
+    > :nth-child(2) {
+      display: none;
+    }
+  }
+}

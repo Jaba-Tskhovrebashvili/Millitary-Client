@@ -1,0 +1,269 @@
+@use 'mixins' as m;
+
+.back {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--c-muted);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--c-primary);
+  }
+}
+
+.muted {
+  color: var(--c-muted);
+}
+
+.alert {
+  @include m.alert(danger);
+  margin-bottom: 16px;
+}
+
+.flash {
+  @include m.alert(success);
+  margin-bottom: 16px;
+}
+
+.btn {
+  @include m.button(primary);
+  min-width: 110px;
+}
+
+.btn-secondary {
+  @include m.button(secondary);
+
+  &.small {
+    padding: 5px 12px;
+    font-size: 14px;
+  }
+}
+
+.btn-danger {
+  @include m.button(danger);
+}
+
+.card {
+  @include m.card;
+}
+
+.person {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+
+  .sub {
+    margin: 4px 0 8px;
+    color: var(--c-muted);
+  }
+}
+
+.badge.off {
+  @include m.badge(danger);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.confirm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.details {
+  padding: 20px 24px;
+  margin-bottom: 24px;
+
+  dl {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px 24px;
+    margin: 0;
+  }
+
+  dt {
+    font-size: 13px;
+    color: var(--c-muted);
+  }
+
+  dd {
+    margin: 2px 0 0;
+  }
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--c-border);
+
+  button {
+    padding: 10px 16px;
+    margin-bottom: -1px;
+    background: none;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: var(--c-muted);
+    cursor: pointer;
+
+    &.active {
+      border-bottom-color: var(--c-primary);
+      color: var(--c-text);
+      font-weight: 500;
+    }
+  }
+}
+
+.panel {
+  padding: 20px 24px;
+}
+
+.panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  h2 {
+    margin: 0;
+    font-size: 17px;
+  }
+}
+
+.inline-form {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: start;
+  gap: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+  background: var(--c-surface-2);
+  border-radius: var(--radius);
+}
+
+.field {
+  @include m.field;
+
+  select {
+    cursor: pointer;
+  }
+
+  input.invalid {
+    border-color: var(--c-danger);
+  }
+}
+
+.picker {
+  position: relative;
+}
+
+.picker-list {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  z-index: 10;
+  max-height: 240px;
+  margin: 0;
+  padding: 4px;
+  overflow-y: auto;
+  list-style: none;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius);
+  box-shadow: 0 8px 24px rgb(0 0 0 / 12%);
+
+  li {
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--c-surface-2);
+    }
+
+    &.selected {
+      background: var(--c-primary-soft);
+      color: var(--c-primary);
+      font-weight: 500;
+    }
+  }
+
+  .picker-note {
+    color: var(--c-muted);
+    cursor: default;
+
+    &:hover {
+      background: none;
+    }
+  }
+}
+
+.form-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  border-top: 1px solid var(--c-border);
+
+  strong {
+    display: block;
+    font-weight: 500;
+  }
+
+  .muted {
+    font-size: 14px;
+  }
+
+  select {
+    padding: 6px 10px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+  }
+}
+
+.dates {
+  color: var(--c-muted);
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .inline-form {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .item {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+}

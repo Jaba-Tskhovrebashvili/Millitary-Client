@@ -1,0 +1,58 @@
+:root {
+  --c-bg: #f4f4ef;
+  --c-surface: #ffffff;
+  --c-surface-2: #f0f0e9;
+  --c-border: #dedfd5;
+  --c-primary: #4a5d2b;
+  --c-primary-hover: #3c4c22;
+  --c-primary-soft: #e8ecdc;
+  --c-text: #1e2117;
+  --c-muted: #6a6e5f;
+  --c-danger: #b0402b;
+  --c-danger-soft: #f7e6e2;
+  --c-success: #3f7a3a;
+  --c-success-soft: #e4f0e2;
+
+  --font-body: 'Noto Sans Georgian', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --radius: 8px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background: var(--c-bg);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--c-primary);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  line-height: 1.25;
+}

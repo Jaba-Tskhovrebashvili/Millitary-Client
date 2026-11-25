@@ -1,0 +1,42 @@
+<header class="page-header">
+  <div>
+    <h1>თანამდებობები</h1>
+    @if (page.total() > 0) {
+      <p class="subtitle">სულ {{ page.total() }}</p>
+    }
+  </div>
+  <input class="search" type="search" placeholder="მოძებნეთ თანამდებობა" (input)="onSearch($any($event.target).value)">
+</header>
+
+@if (page.error(); as error) {
+  <div class="alert">{{ error }}</div>
+}
+
+<div class="table">
+  @for (p of page.items(); track p.id) {
+    <div class="row">
+      <div>
+        <span class="name">{{ p.name }}</span>
+        @if (p.description) {
+          <p class="desc">{{ p.description }}</p>
+        }
+      </div>
+      @if (!p.isActive) {
+        <span class="badge">გაუქმებული</span>
+      }
+    </div>
+  }
+
+  @if (page.loading() && page.items().length === 0) {
+    <p class="note">იტვირთება...</p>
+  } @else if (!page.loading() && !page.error() && page.total() === 0) {
+    <p class="note">თანამდებობა ვერ მოიძებნა</p>
+  }
+</div>
+
+<div
+  appInfiniteScroll
+  [scrollDisabled]="page.loading() || !page.hasMore()"
+  [scrollKey]="page.items().length"
+  (scrolled)="page.showMore()"
+></div>

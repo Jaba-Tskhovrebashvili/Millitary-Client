@@ -1,0 +1,66 @@
+<header class="page-header">
+  <div>
+    <h1>პირადი შემადგენლობა</h1>
+    @if (page.count() > 0) {
+    <p class="subtitle">სულ {{ page.count() }}</p>
+    }
+  </div>
+  <div class="actions">
+    <input class="search" type="search" placeholder="სახელი, გვარი ან პირადი ნომერი"
+      (input)="onSearch($any($event.target).value)">
+    <a routerLink="/personnel/new" class="btn">დამატება</a>
+  </div>
+</header>
+
+<div class="table">
+  <div class="row head">
+    <span>სახელი და გვარი</span>
+    <span>წოდება</span>
+    <span>პირადი ნომერი</span>
+    <span>გაწვევის თარიღი</span>
+    <span>სტატუსი</span>
+  </div>
+
+  @for (p of page.items(); track p.id) {
+  <a class="row" [routerLink]="['/personnel', p.id]">
+    <span>
+      <span class="name">{{ p.name }} {{ p.surname }}</span>
+      <small>{{ p.email }}</small>
+    </span>
+    <span class="rank-badge">
+      <img [src]="readOnly[p.rank.id - 1]?.src" [alt]="p.rank.name" class="rank-icon" />
+      <span>{{ p.rank.name }}</span>
+    </span>
+    <span>{{ p.personalNumber }}</span>
+    <span>{{ p.enlistmentDate | date: 'dd.MM.yyyy' }}</span>
+    <span>
+      @if (p.isActive) {
+      <span class="badge">აქტიური</span>
+      }
+    </span>
+  </a>
+  }
+
+  @if (page.firstLoad()) {
+  <p class="note">იტვირთება...</p>
+  } @else if (!page.loading() && !page.error() && page.items().length === 0) {
+  <p class="note">ვერავინ მოიძებნა</p>
+  }
+</div>
+
+<footer class="list-footer">
+  @if (page.error(); as error) {
+  <span class="error">{{ error }}</span>
+  <button type="button" class="retry" (click)="page.loadNext()">თავიდან ცდა</button>
+  } @else if (page.loading() && !page.firstLoad()) {
+  იტვირთება...
+  }
+</footer>
+<div class="card flex justify-content-center">
+  <p-paginator (onPageChange)="onPageChange($event)" [first]="first" [rows]="rows"
+    [totalRecords]="this.page._totalPages() * 10" />
+
+</div>
+
+<!-- <div appInfiniteScroll [scrollDisabled]="page.loading() || !page.hasMore() || !!page.error()"
+  (scrolled)="page.loadNext()"></div> -->
