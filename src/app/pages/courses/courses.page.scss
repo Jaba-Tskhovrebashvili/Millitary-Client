@@ -4,6 +4,17 @@
   @include m.page-header;
 }
 
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+
+}
+
+.btn {
+  @include m.button(primary);
+}
+
 .search {
   @include m.search-input;
 }

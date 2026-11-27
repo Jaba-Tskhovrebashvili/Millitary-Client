@@ -4,10 +4,10 @@ import { InfiniteScrollDirective } from '@shared/infinite-scroll/infinite-scroll
 import { Subject, debounceTime, distinctUntilChanged, map, startWith } from 'rxjs';
 import { CoursesApi } from './courses.api';
 import { CoursesService } from './courses.service';
-
+import { RouterLink } from '@angular/router';
 @Component({
   selector: 'app-courses-page',
-  imports: [InfiniteScrollDirective],
+  imports: [InfiniteScrollDirective, RouterLink],
   providers: [CoursesService, CoursesApi],
   templateUrl: './courses.page.html',
   styleUrl: './courses.page.scss',

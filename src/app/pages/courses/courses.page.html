@@ -2,14 +2,19 @@
   <div>
     <h1>კურსები</h1>
     @if (page.total() > 0) {
-      <p class="subtitle">სულ {{ page.total() }}</p>
+    <p class="subtitle">სულ {{ page.total() }}</p>
     }
   </div>
-  <input class="search" type="search" placeholder="მოძებნეთ კურსი" (input)="onSearch($any($event.target).value)">
+
+  <div class="actions">
+    <input class="search" type="search" placeholder="მოძებნეთ კურსი" (input)="onSearch($any($event.target).value)">
+    <a routerLink="/courses/new" class="btn">დამატება</a>
+  </div>
 </header>
 
+
 @if (page.error(); as error) {
-  <div class="alert">{{ error }}</div>
+<div class="alert">{{ error }}</div>
 }
 
 <div class="table">
@@ -20,34 +25,30 @@
   </div>
 
   @for (c of page.items(); track c.id) {
-    <div class="row">
-      <div>
-        <span class="name">{{ c.name }}</span>
-        @if (c.description) {
-          <p class="desc">{{ c.description }}</p>
-        }
-      </div>
-      <span>{{ c.durationInWeeks }} კვირა</span>
-      <span>
-        @if (c.isActive) {
-          <span class="badge">აქტიური</span>
-        } @else {
-          <span class="badge off">არააქტიური</span>
-        }
-      </span>
+  <div class="row">
+    <div>
+      <span class="name">{{ c.name }}</span>
+      @if (c.description) {
+      <p class="desc">{{ c.description }}</p>
+      }
     </div>
+    <span>{{ c.durationInWeeks }} კვირა</span>
+    <span>
+      @if (c.isActive) {
+      <span class="badge">აქტიური</span>
+      } @else {
+      <span class="badge off">არააქტიური</span>
+      }
+    </span>
+  </div>
   }
 
   @if (page.loading() && page.items().length === 0) {
-    <p class="note">იტვირთება...</p>
+  <p class="note">იტვირთება...</p>
   } @else if (!page.loading() && !page.error() && page.total() === 0) {
-    <p class="note">კურსი ვერ მოიძებნა</p>
+  <p class="note">კურსი ვერ მოიძებნა</p>
   }
 </div>
 
-<div
-  appInfiniteScroll
-  [scrollDisabled]="page.loading() || !page.hasMore()"
-  [scrollKey]="page.items().length"
-  (scrolled)="page.showMore()"
-></div>
+<div appInfiniteScroll [scrollDisabled]="page.loading() || !page.hasMore()" [scrollKey]="page.items().length"
+  (scrolled)="page.showMore()"></div>

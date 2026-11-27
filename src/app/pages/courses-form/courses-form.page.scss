@@ -1,0 +1,101 @@
+@use 'mixins' as m;
+
+
+.back {
+  display: inline-block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--c-muted);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--c-primary);
+  }
+}
+
+.page-header {
+  @include m.page-header;
+}
+
+.muted {
+  color: var(--c-muted);
+}
+
+.card {
+  @include m.card;
+  max-width: 760px;
+  padding: 8px 28px 28px;
+}
+
+h2 {
+  margin: 24px 0 14px;
+  font-size: 16px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.field {
+  @include m.field;
+}
+
+.alert {
+  @include m.alert(danger);
+  margin-top: 20px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.btn {
+  @include m.button(primary);
+  min-width: 120px;
+}
+
+.btn-secondary {
+  @include m.button(secondary);
+}
+
+.checkbox {
+  margin-top: 16px;
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+
+    &:hover {
+      border-color: var(--c-primary);
+    }
+
+    &:has(input:checked) {
+      border-color: var(--c-primary);
+      background: color-mix(in srgb, var(--c-primary) 5%, transparent);
+    }
+  }
+
+  input {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: var(--c-primary);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+}

@@ -119,3 +119,103 @@
     }
   }
 }
+
+.pager {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -46px;
+}
+
+:host ::ng-deep .pager {
+  .p-paginator {
+    @include m.card;
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px 12px;
+    background: var(--c-surface, #fff);
+    border: 1px solid var(--c-border);
+    color: var(--c-text);
+  }
+
+  .p-paginator-pages {
+    display: inline-flex;
+    gap: 4px;
+    width: auto;
+  }
+
+
+  .p-paginator-page,
+  .p-paginator-first,
+  .p-paginator-prev,
+  .p-paginator-next,
+  .p-paginator-last {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 34px;
+    height: 34px;
+    padding: 0 10px;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    color: var(--c-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+
+    &:not(:disabled):not(.p-disabled):hover {
+      background: var(--c-surface-2);
+      border-color: var(--c-border);
+      color: var(--c-text);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-primary, #2563eb);
+      outline-offset: 2px;
+      box-shadow: none;
+    }
+
+    &:disabled,
+    &.p-disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+  }
+
+  // active page (old: .p-highlight, v18+: .p-paginator-page-selected)
+  .p-paginator-page.p-highlight,
+  .p-paginator-page.p-paginator-page-selected {
+    background: #f1f5f9;
+    border-color: #e2e8f0;
+    color: #334155;
+    font-weight: 600;
+  }
+
+  // optional: rows-per-page dropdown & "Page x of y"
+  .p-paginator-current {
+    color: var(--c-muted);
+    font-size: 13px;
+    padding: 0 8px;
+  }
+
+  .p-dropdown,
+  .p-select {
+    height: 34px;
+    border: 1px solid var(--c-border);
+    border-radius: 8px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 900px) {
+  :host ::ng-deep .pager {
+
+    .p-paginator-first,
+    .p-paginator-last {
+      display: none;
+    }
+  }
+}
